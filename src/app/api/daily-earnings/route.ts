@@ -55,8 +55,8 @@ export async function POST(request: NextRequest) {
 
     // Create new earnings
     const earningsData = earnings
-      .filter((earning: any) => earning.amount > 0)
-      .map((earning: any) => ({
+      .filter((earning: { amount: number; categoryId: number }) => earning.amount > 0)
+      .map((earning: { amount: number; categoryId: number }) => ({
         date: new Date(date),
         amount: earning.amount,
         categoryId: earning.categoryId

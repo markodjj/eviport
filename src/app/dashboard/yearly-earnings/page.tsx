@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Container, Section, Typography, useToast } from '@/components/ui';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
@@ -36,10 +36,6 @@ export default function YearlyEarningsPage() {
   const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
   const [loading, setLoading] = useState(false);
 
-  const monthNames = [
-    'January', 'February', 'March', 'April', 'May', 'June',
-    'July', 'August', 'September', 'October', 'November', 'December'
-  ];
 
   const dayNames = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 
@@ -63,7 +59,7 @@ export default function YearlyEarningsPage() {
     }
   };
 
-  const fetchYearlyData = async () => {
+  const fetchYearlyData = useCallback(async () => {
     setLoading(true);
     try {
       const response = await fetch(`/api/yearly-earnings?year=${currentYear}`);
@@ -83,7 +79,7 @@ export default function YearlyEarningsPage() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [currentYear, addToast]);
 
   const navigateYear = (direction: 'prev' | 'next') => {
     setCurrentYear(prev => direction === 'prev' ? prev - 1 : prev + 1);

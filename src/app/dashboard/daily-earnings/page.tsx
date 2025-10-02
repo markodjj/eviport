@@ -25,7 +25,6 @@ export default function DailyEarningsPage() {
   const [selectedDate, setSelectedDate] = useState<string>(
     new Date().toISOString().split('T')[0]
   );
-  const [loading, setLoading] = useState(false);
   const [saving, setSaving] = useState(false);
 
   // Fetch categories on component mount

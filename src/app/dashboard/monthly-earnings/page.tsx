@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Container, Section, Typography, useToast } from '@/components/ui';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
@@ -11,12 +11,6 @@ interface Category {
   name: string;
 }
 
-interface DailyEarning {
-  id: number;
-  date: string;
-  amount: number;
-  categoryId: number;
-}
 
 interface MonthlyData {
   [categoryId: number]: {
@@ -73,7 +67,7 @@ export default function MonthlyEarningsPage() {
     }
   };
 
-  const fetchMonthlyData = async () => {
+  const fetchMonthlyData = useCallback(async () => {
     setLoading(true);
     try {
       const year = currentDate.getFullYear();
@@ -89,7 +83,7 @@ export default function MonthlyEarningsPage() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [currentDate]);
 
   const navigateMonth = (direction: 'prev' | 'next') => {
     setCurrentDate(prev => {

@@ -34,7 +34,6 @@ export interface TypographyProps
 export function Typography({ 
   className, 
   variant, 
-  as, 
   children, 
   ...props 
 }: TypographyProps) {

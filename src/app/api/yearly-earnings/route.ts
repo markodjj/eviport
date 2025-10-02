@@ -32,7 +32,14 @@ export async function GET(request: NextRequest) {
     });
 
     // Group earnings by category and month
-    const yearlyData: { [categoryId: number]: any[] } = {};
+    const yearlyData: { [categoryId: number]: Array<{
+      month: number;
+      monthName: string;
+      totalEarnings: number;
+      averageEarnings: number;
+      daysWithEarnings: number;
+      weeklyPatterns: { [dayOfWeek: number]: { count: number; total: number; average: number } };
+    }> } = {};
 
     earnings.forEach((earning) => {
       const categoryId = earning.categoryId;
