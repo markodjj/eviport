@@ -38,33 +38,27 @@ export function Typography({
   children, 
   ...props 
 }: TypographyProps) {
-  // Map variants to actual HTML elements
-  const getElement = (variant: string) => {
-    switch (variant) {
-      case "h1": return "h1"
-      case "h2": return "h2"
-      case "h3": return "h3"
-      case "h4": return "h4"
-      case "h5": return "h5"
-      case "h6": return "h6"
-      case "blockquote": return "blockquote"
-      case "code": return "code"
-      case "lead":
-      case "large":
-      case "small":
-      case "muted":
-      default: return "p"
-    }
+  const elementClass = cn(typographyVariants({ variant, className }))
+  
+  // Render different elements based on variant
+  switch (variant) {
+    case "h1":
+      return <h1 className={elementClass} {...props}>{children}</h1>
+    case "h2":
+      return <h2 className={elementClass} {...props}>{children}</h2>
+    case "h3":
+      return <h3 className={elementClass} {...props}>{children}</h3>
+    case "h4":
+      return <h4 className={elementClass} {...props}>{children}</h4>
+    case "h5":
+      return <h5 className={elementClass} {...props}>{children}</h5>
+    case "h6":
+      return <h6 className={elementClass} {...props}>{children}</h6>
+    case "blockquote":
+      return <blockquote className={elementClass} {...props}>{children}</blockquote>
+    case "code":
+      return <code className={elementClass} {...props}>{children}</code>
+    default:
+      return <p className={elementClass} {...props}>{children}</p>
   }
-  
-  const Component = as || getElement(variant || "p")
-  
-  return (
-    <Component
-      className={cn(typographyVariants({ variant, className }))}
-      {...props}
-    >
-      {children}
-    </Component>
-  )
 }
