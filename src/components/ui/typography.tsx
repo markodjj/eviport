@@ -1,5 +1,6 @@
 import { cn } from "@/lib/utils"
 import { cva, type VariantProps } from "class-variance-authority"
+import React from "react"
 
 const typographyVariants = cva("", {
   variants: {
@@ -27,7 +28,7 @@ const typographyVariants = cva("", {
 export interface TypographyProps
   extends React.HTMLAttributes<HTMLElement>,
     VariantProps<typeof typographyVariants> {
-  as?: keyof JSX.IntrinsicElements
+  as?: keyof React.JSX.IntrinsicElements
 }
 
 export function Typography({ 
