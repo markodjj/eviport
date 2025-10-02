@@ -38,7 +38,26 @@ export function Typography({
   children, 
   ...props 
 }: TypographyProps) {
-  const Component = as || (variant === "p" ? "p" : variant || "p")
+  // Map variants to actual HTML elements
+  const getElement = (variant: string) => {
+    switch (variant) {
+      case "h1": return "h1"
+      case "h2": return "h2"
+      case "h3": return "h3"
+      case "h4": return "h4"
+      case "h5": return "h5"
+      case "h6": return "h6"
+      case "blockquote": return "blockquote"
+      case "code": return "code"
+      case "lead":
+      case "large":
+      case "small":
+      case "muted":
+      default: return "p"
+    }
+  }
+  
+  const Component = as || getElement(variant || "p")
   
   return (
     <Component
