@@ -16,9 +16,9 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    // Calculate date range for the month
-    const startDate = new Date(year, month - 1, 1);
-    const endDate = new Date(year, month, 0); // Last day of the month
+    // Calculate date range for the month using UTC to avoid timezone issues
+    const startDate = new Date(Date.UTC(year, month - 1, 1));
+    const endDate = new Date(Date.UTC(year, month, 0)); // Last day of the month
 
     const earnings = await prisma.dailyEarning.findMany({
       where: {
@@ -36,7 +36,7 @@ export async function GET(request: NextRequest) {
     const monthlyData: { [categoryId: number]: { [day: number]: number } } = {};
 
     earnings.forEach((earning) => {
-      const day = earning.date.getDate();
+      const day = earning.date.getUTCDate(); // Use UTC date to avoid timezone issues
       const categoryId = earning.categoryId;
       
       if (!monthlyData[categoryId]) {

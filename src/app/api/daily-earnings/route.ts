@@ -15,9 +15,13 @@ export async function GET(request: NextRequest) {
       );
     }
 
+    // Parse date string and create UTC date to avoid timezone issues
+    const [year, month, day] = date.split('-').map(Number);
+    const targetDate = new Date(Date.UTC(year, month - 1, day)); // Use UTC to avoid timezone conversion
+
     const earnings = await prisma.dailyEarning.findMany({
       where: {
-        date: new Date(date)
+        date: targetDate
       },
       include: {
         category: true
@@ -46,10 +50,14 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // Parse date string and create UTC date to avoid timezone issues
+    const [year, month, day] = date.split('-').map(Number);
+    const targetDate = new Date(Date.UTC(year, month - 1, day)); // Use UTC to avoid timezone conversion
+
     // Delete existing earnings for this date
     await prisma.dailyEarning.deleteMany({
       where: {
-        date: new Date(date)
+        date: targetDate
       }
     });
 
@@ -57,7 +65,7 @@ export async function POST(request: NextRequest) {
     const earningsData = earnings
       .filter((earning: { amount: number; categoryId: number }) => earning.amount > 0)
       .map((earning: { amount: number; categoryId: number }) => ({
-        date: new Date(date),
+        date: targetDate,
         amount: earning.amount,
         categoryId: earning.categoryId
       }));

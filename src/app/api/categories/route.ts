@@ -90,6 +90,7 @@ export async function DELETE(request: NextRequest) {
       );
     }
 
+    // Delete the category - cascade delete will automatically handle related daily earnings
     await prisma.category.delete({
       where: { id: parseInt(id) }
     });

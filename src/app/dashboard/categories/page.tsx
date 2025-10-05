@@ -169,7 +169,7 @@ export default function CategoriesPage() {
   };
 
   const handleDeleteCategory = async (categoryId: number, categoryName: string) => {
-    if (!confirm(`Are you sure you want to delete the category "${categoryName}"? This action cannot be undone.`)) {
+    if (!confirm(`Are you sure you want to delete the category "${categoryName}"? This will also delete ALL earnings associated with this category. This action cannot be undone.`)) {
       return;
     }
 

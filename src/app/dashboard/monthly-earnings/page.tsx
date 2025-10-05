@@ -217,8 +217,11 @@ export default function MonthlyEarningsPage() {
   const saveEdit = async () => {
     setSaving(true);
     try {
-      const date = new Date(currentDate.getFullYear(), currentDate.getMonth(), editModal.day);
-      const dateString = date.toISOString().split('T')[0];
+      // Create date in local timezone to avoid timezone conversion issues
+      const year = currentDate.getFullYear();
+      const month = currentDate.getMonth() + 1; // Convert to 1-indexed month
+      const day = editModal.day;
+      const dateString = `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
       
       const response = await fetch('/api/daily-earnings', {
         method: 'POST',
